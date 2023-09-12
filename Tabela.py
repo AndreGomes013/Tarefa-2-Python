@@ -23,9 +23,12 @@ class Tabela:
             lines = file.readlines()
             for i, line in enumerate(lines):
                 if i == 0:
-                    cabecalho = [val.strip('\'[]') for val in line.strip().split(',')]  # Remova os colchetes e as aspas
+                    line = line.replace("', '", "','")  # Remove espaços entre as vírgulas
+                    cabecalho = [val.strip('\'[]') for val in
+                                 line.strip().split(',')]  # Remova os colchetes e as aspas7
                     self.add_cabecalho(cabecalho)
                 else:
+                    line = line.replace("', '", "','")  # Remove espaços entre as vírgulas
                     valores = [val.strip('\'[]') for val in line.strip().split(',')]  # Remova os colchetes e as aspas
                     self.addLinha(Linha(valores))
 
@@ -39,7 +42,3 @@ class Tabela:
             result += str(linha.dados) + "\n"
         return result
 
-teste = Tabela("carros.txt")
-print(teste)
-teste.writeFile("saida.txt")
-print(teste)
