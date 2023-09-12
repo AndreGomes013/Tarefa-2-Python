@@ -1,50 +1,36 @@
 from Linha import Linha
 
-
 class Tabela:
     def __init__(self):
-        self.dados = []
         self.cabecalho = Linha()
+        self.dados = []
 
-    def add_cabecalho(self, valores):
-        self.cabecalho.append(valores)
+    def add_cabecalho(self, valor):
+        self.cabecalho = Linha()
+        self.cabecalho.append(valor)
 
-    def addLinha(self, valores):
-        if len(valores) != len(self.cabecalho):
-            print("tamanho da linha incompatível")
-            return
-        nova_linha = Linha()
-        nova_linha.append(valores)
-        self.dados.append(nova_linha)
+    def addLinha(self, linha):
+        if len(linha) != len(self.cabecalho):
+            print("Tamanhos incompatíveis")
+        else:
+            self.dados.append(linha)
 
     def __str__(self):
-        result = [str(self.cabecalho)]
-        result.append("-" * len(str(self.cabecalho)))
+        result = str(self.cabecalho) + "\n" + "-" * (len(self.cabecalho) * 15) + "\n"
         for linha in self.dados:
-            result.append(str(linha))
-        return '\n'.join(result)
+            result += str(linha) + "\n"
+        return result
 
+    def ordena_por(self, valor):
+        print(f"Ordenação por {valor}:")
+        index = self.cabecalho.dados.index(valor)
+        self.dados.sort(key=lambda x: x.dados[index])
 
+    def ordena_por_ano(self):
+        self.ordena_por("Ano")
 
+    def ordena_por_modelo(self):
+        self.ordena_por("Modelo")
 
-tab = Tabela()
-tab.add_cabecalho(["Placa", "Ano", "Marca", "Modelo"])
-carro = Linha()
-carro.append(["ZBB1B11", 1998, "Ford", "Ka"])
-tab.addLinha(carro)
-carro = Linha()
-carro.append(["BBB1B22", 2010, "Ford", "Fusion"])
-tab.addLinha(carro)
-carro = Linha()
-carro.append(["DBB1B33", 2020, "Fiat", "Uno"])
-tab.addLinha(carro)
-carro = Linha()
-carro.append(["CBB1B00", 2015, "Volks", "Gol"])
-tab.addLinha(carro)
-
-print(tab)
-
-carro = Linha()
-carro.append(["CBB1B00", 2015, "Volks", "Gol", "Teste"])
-tab.addLinha(carro)
-
+    def ordena_por_placa(self):
+        self.ordena_por("Placa")

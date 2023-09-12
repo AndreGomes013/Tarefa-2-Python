@@ -2,29 +2,14 @@ class Linha:
     def __init__(self):
         self.dados = []
 
-    def append(self, x):
-        if isinstance(x, list):
-            self.dados.extend(x)
+    def append(self, valor):
+        if isinstance(valor, list):
+            self.dados.extend(valor)
         else:
-            self.dados.append(x)
+            self.dados.append(valor)
 
     def __str__(self):
-        numeros = ",".join(str(item) for item in self.dados)
-        tamanho = len(self.dados)
-        return f"{numeros}({tamanho})"
+        return str(self.dados)
 
     def __len__(self):
         return len(self.dados)
-
-
-aux = Linha()
-# o parâmetro é uma lista
-aux.append([1, 2, 3, 4, 3])
-# o parâmetro não é uma lista
-aux.append(2)
-
-print(aux)
-print("Comprimento:"+str(len(aux)))
-
-
-
