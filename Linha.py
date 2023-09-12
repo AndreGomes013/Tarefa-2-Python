@@ -1,6 +1,9 @@
 class Linha:
-    def __init__(self):
-        self.dados = []
+    def __init__(self, valores=None):
+        if valores is None:
+            self.dados = []
+        else:
+            self.dados = valores
 
     def append(self, valor):
         if isinstance(valor, list):

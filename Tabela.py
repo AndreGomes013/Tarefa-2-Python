@@ -1,9 +1,12 @@
 from Linha import Linha
 
 class Tabela:
-    def __init__(self):
+    def __init__(self, arquivo=None):
         self.cabecalho = Linha()
         self.dados = []
+
+        if arquivo:
+            self.loadFile(arquivo)
 
     def add_cabecalho(self, valor):
         self.cabecalho = Linha()
@@ -15,22 +18,28 @@ class Tabela:
         else:
             self.dados.append(linha)
 
+    def loadFile(self, arquivo):
+        with open(arquivo, 'r') as file:
+            lines = file.readlines()
+            for i, line in enumerate(lines):
+                if i == 0:
+                    cabecalho = [val.strip('\'[]') for val in line.strip().split(',')]  # Remova os colchetes e as aspas
+                    self.add_cabecalho(cabecalho)
+                else:
+                    valores = [val.strip('\'[]') for val in line.strip().split(',')]  # Remova os colchetes e as aspas
+                    self.addLinha(Linha(valores))
+
+    def writeFile(self, arquivo):
+        with open(arquivo, 'w') as file:
+            file.write(str(self))
+
     def __str__(self):
-        result = str(self.cabecalho) + "\n" + "-" * (len(self.cabecalho) * 15) + "\n"
+        result = str(self.cabecalho) + "\n"
         for linha in self.dados:
-            result += str(linha) + "\n"
+            result += str(linha.dados) + "\n"
         return result
 
-    def ordena_por(self, valor):
-        print(f"Ordenação por {valor}:")
-        index = self.cabecalho.dados.index(valor)
-        self.dados.sort(key=lambda x: x.dados[index])
-
-    def ordena_por_ano(self):
-        self.ordena_por("Ano")
-
-    def ordena_por_modelo(self):
-        self.ordena_por("Modelo")
-
-    def ordena_por_placa(self):
-        self.ordena_por("Placa")
+teste = Tabela("carros.txt")
+print(teste)
+teste.writeFile("saida.txt")
+print(teste)
